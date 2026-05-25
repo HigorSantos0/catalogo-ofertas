@@ -326,8 +326,15 @@ function renderCart(){
     <div class="cart-sum">
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
-      <a href="https://wa.me/5521994958427?text=${msg}" target="_blank" class="wa-btn" style="text-decoration:none; display:flex; text-align:center;">
-        <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> Finalizar pelo WhatsApp
+      
+      <a href="https://wa.me/5521994958427?text=${msg}" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         style="text-decoration:none; display:block; width:100%;">
+        <button class="wa-btn" style="width:100%; border:none; cursor:pointer;">
+          <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.1rem"></i> 
+          Finalizar pelo WhatsApp
+        </button>
       </a>
     </div>`;
 }
