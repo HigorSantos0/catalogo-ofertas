@@ -331,12 +331,17 @@ function renderCart(){
          target="_blank" 
          rel="noopener noreferrer" 
          style="text-decoration:none; display:block; width:100%;">
-        <button class="wa-btn" style="width:100%; border:none; cursor:pointer;">
-          <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.1rem"></i> 
+        <button class="wa-btn" onclick="abrirWhatsApp('${msg}')" style="width:100%; border:none; cursor:pointer;">
+          <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
           Finalizar pelo WhatsApp
         </button>
       </a>
     </div>`;
+}
+function abrirWhatsApp(msg) {
+  const url = 'https://wa.me/5521994958427?text=' + msg;
+  // Tenta abrir em uma nova janela de forma mais "limpa"
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 function removeCart(idx){cart.splice(idx,1);updateBadge();renderCart();}
