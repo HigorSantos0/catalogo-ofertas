@@ -336,10 +336,11 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <!-- Versão mais simples e confiável possível -->
+      <!-- === IGUAL AO BOTÃO DA PÁGINA INICIAL === -->
       <a href="${whatsappUrl}" 
+         target="_blank" 
          class="wa-btn"
-         style="text-decoration: none;">
+         style="text-decoration: none; display: inline-block; width: 100%;">
         <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
         Finalizar pelo WhatsApp
       </a>
