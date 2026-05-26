@@ -317,9 +317,7 @@ function renderCart(){
   
   const total = cart.reduce((s,i)=>s+i.price,0);
   
-  // Mensagem mais curta para evitar problemas no Chrome
   const mensagem = `Olá! Gostaria de finalizar meu pedido.\nTotal: ${fmt(total)}\n\nItens:\n${cart.map(i => `- ${i.name} - ${fmt(i.price)}`).join('\n')}`;
-
   const encodedMsg = encodeURIComponent(mensagem);
 
   el.innerHTML = cart.map((item,idx)=>`
@@ -336,7 +334,7 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <!-- Botão via JavaScript - Mais estável no Chrome Android -->
+      <!-- Botão via JavaScript - Melhor compatibilidade com Chrome Android -->
       <button onclick="abrirWhatsFinalizar('${encodedMsg}')" 
               class="wa-btn">
         <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
@@ -347,42 +345,14 @@ function renderCart(){
 function abrirWhatsFinalizar(encodedMsg) {
   const url = `https://wa.me/5521994958427?text=${encodedMsg}`;
   
-  // Estratégia específica para Chrome Android
-  window.location.href = url;
-  
-  // Fallback caso precise
-  setTimeout(() => {
+  // Estratégia mais confiável para Chrome Android
+  try {
+    window.location.href = url;
+  } catch(e) {
     window.open(url, '_blank');
-  }, 500);
-}
-function abrirWhatsApp(msg) {
-  finalizarWhatsApp(msg);
-}
-
-function finalizarWhatsApp(msg){
-  const numero = '5521994958427';
-
-  // Tenta abrir direto no app
-  const whatsappApp = `whatsapp://send?phone=${numero}&text=${msg}`;
-
-  // Fallback navegador
-  const whatsappWeb = `https://wa.me/${numero}?text=${msg}`;
-
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-  if (isMobile) {
-    // Abre diretamente o aplicativo
-    window.location.href = whatsappApp;
-
-    // Caso não tenha app instalado, cai pro navegador
-    setTimeout(() => {
-      window.location.href = whatsappWeb;
-    }, 1200);
-
-  } else {
-    window.open(whatsappWeb, '_blank');
   }
 }
+
 
 function removeCart(idx){cart.splice(idx,1);updateBadge();renderCart();}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
