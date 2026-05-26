@@ -317,10 +317,8 @@ function renderCart(){
   }
   
   const total = cart.reduce((s,i)=>s+i.price,0);
-  
   const mensagem = `Olá! Gostaria de finalizar meu pedido. Total: ${fmt(total)}.`;
-  const encodedMsg = encodeURIComponent(mensagem);
-  const whatsappUrl = `https://wa.me/5521994958427?text=${encodedMsg}`;
+  const whatsappUrl = `https://wa.me/5521994958427?text=${encodeURIComponent(mensagem)}`;
 
   el.innerHTML = cart.map((item,idx)=>`
     <div class="ci">
@@ -336,22 +334,11 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <!-- Usando <a> direto - mais estável no Chrome Android -->
-      <a href="${whatsappUrl}" 
-         class="wa-btn" 
-         style="text-decoration: none; display: block; text-align: center;">
+      <a href="${whatsappUrl}" target="_blank" class="wa-btn" style="text-decoration:none; display:block; width:100%;">
         <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
         Finalizar pelo WhatsApp
       </a>
     </div>`;
-}
-
-function abrirWhatsFinalizar(encodedMsg) {
-  const numero = "5521994958427";
-  const url = `https://wa.me/${numero}?text=${encodedMsg}`;
-  
-  // Método mais confiável para Chrome Android atualmente
-  window.location.href = url;
 }
 
 // ==================== OUTRAS FUNÇÕES ====================
