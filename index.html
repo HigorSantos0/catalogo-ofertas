@@ -346,19 +346,25 @@ function abrirWhatsApp(msg) {
 function finalizarWhatsApp(msg){
   const numero = '5521994958427';
 
-  // Link universal do WhatsApp
-  const urlMobile = `https://api.whatsapp.com/send?phone=${numero}&text=${msg}`;
-  const urlDesktop = `https://web.whatsapp.com/send?phone=${numero}&text=${msg}`;
+  // Tenta abrir direto no app
+  const whatsappApp = `whatsapp://send?phone=${numero}&text=${msg}`;
 
-  // Detecta celular
+  // Fallback navegador
+  const whatsappWeb = `https://wa.me/${numero}?text=${msg}`;
+
   const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   if (isMobile) {
-    // Abre diretamente no app/navegador mobile
-    window.location.replace(urlMobile);
+    // Abre diretamente o aplicativo
+    window.location.href = whatsappApp;
+
+    // Caso não tenha app instalado, cai pro navegador
+    setTimeout(() => {
+      window.location.href = whatsappWeb;
+    }, 1200);
+
   } else {
-    // Desktop
-    window.open(urlDesktop, '_blank');
+    window.open(whatsappWeb, '_blank');
   }
 }
 
