@@ -330,15 +330,14 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <a href="whatsapp://send?phone=5521994958427&text=${msg}" 
-        style="text-decoration:none; display:block; width:100%;">
-        <button class="wa-btn" 
-            onclick="window.location.href='https://wa.me/5521994958427?text=${msg}'" 
-            style="width:100%; border:none; cursor:pointer; background:linear-gradient(135deg,#25D366,#128C7E); padding:1.1rem; border-radius:10px; color:#fff; font-weight:600; display:flex; align-items:center; justify-content:center; gap:.5rem;">
-          <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
-          Finalizar pelo WhatsApp
-        </button>
-      </a>
+      <a href="https://wa.me/5521994958427?text=${msg}" 
+   target="_self" 
+   style="text-decoration:none; display:block; width:100%;">
+  <button type="button" class="wa-btn" style="width:100%; border:none; cursor:pointer;">
+    <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
+    Finalizar pelo WhatsApp
+  </button>
+</a>
     </div>`;
 }
 function abrirWhatsApp(msg) {
