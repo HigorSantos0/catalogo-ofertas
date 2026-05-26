@@ -340,19 +340,25 @@ function renderCart(){
     </div>`;
 }
 function abrirWhatsApp(msg) {
-  const url = 'https://wa.me/5521994958427?text=' + msg;
-  window.location.href = url;
+  finalizarWhatsApp(msg);
 }
 
 function finalizarWhatsApp(msg){
-  const url = `https://wa.me/5521994958427?text=${msg}`;
+  const numero = '5521994958427';
 
-  // Mobile
-  if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    window.location.href = url;
+  // Link universal do WhatsApp
+  const urlMobile = `https://api.whatsapp.com/send?phone=${numero}&text=${msg}`;
+  const urlDesktop = `https://web.whatsapp.com/send?phone=${numero}&text=${msg}`;
+
+  // Detecta celular
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    // Abre diretamente no app/navegador mobile
+    window.location.replace(urlMobile);
   } else {
     // Desktop
-    window.open(url, '_blank');
+    window.open(urlDesktop, '_blank');
   }
 }
 
