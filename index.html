@@ -318,10 +318,9 @@ function renderCart(){
   
   const total = cart.reduce((s,i)=>s+i.price,0);
   
-  // Mensagem bem curta
-  // Dentro da função renderCart(), troque esta parte:
   const mensagem = `Olá! Gostaria de finalizar meu pedido. Total: ${fmt(total)}.`;
   const encodedMsg = encodeURIComponent(mensagem);
+  const whatsappUrl = `https://wa.me/5521994958427?text=${encodedMsg}`;
 
   el.innerHTML = cart.map((item,idx)=>`
     <div class="ci">
@@ -337,11 +336,13 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <button onclick="abrirWhatsFinalizar('${encodedMsg}')" 
-              class="wa-btn">
+      <!-- Usando <a> direto - mais estável no Chrome Android -->
+      <a href="${whatsappUrl}" 
+         class="wa-btn" 
+         style="text-decoration: none; display: block; text-align: center;">
         <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
         Finalizar pelo WhatsApp
-      </button>
+      </a>
     </div>`;
 }
 
