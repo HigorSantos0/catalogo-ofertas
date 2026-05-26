@@ -316,11 +316,11 @@ function renderCart(){
   }
   
   const total = cart.reduce((s,i)=>s+i.price,0);
-  const msg = encodeURIComponent('Olá! Gostaria de finalizar meu pedido:\n' + 
-                cart.map(i => `- ${i.name}: ${fmt(i.price)}`).join('\n') + 
-                `\n\nTotal: ${fmt(total)}`);
+  
+  // Mensagem simplificada para evitar URL muito longa
+  const msgSimples = encodeURIComponent(`Olá! Gostaria de finalizar meu pedido. Total: ${fmt(total)}. Vou te passar os detalhes agora.`);
 
-  const whatsappUrl = `https://wa.me/5521994958427?text=${msg}`;
+  const whatsappUrl = `https://wa.me/5521994958427?text=${msgSimples}`;
 
   el.innerHTML = cart.map((item,idx)=>`
     <div class="ci">
@@ -336,7 +336,6 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <!-- Versão mais estável possível -->
       <a href="${whatsappUrl}" 
          class="wa-btn"
          style="text-decoration: none; display: inline-block; width: 100%;">
