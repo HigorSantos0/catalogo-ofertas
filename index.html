@@ -308,9 +308,10 @@ function addCart(id){
 function updateBadge(){document.getElementById('cartBadge').textContent=cart.length;}
 
 function renderCart(){
-  const el=document.getElementById('cartContent');
+  const el = document.getElementById('cartContent');
+  
   if(!cart.length){
-    el.innerHTML=`<div class="cart-empty-wrap"><div class="cart-empty-icon"><i class="ti ti-heart" aria-hidden="true"></i></div><div class="cart-etitle">Carrinho vazio</div><div class="cart-esub">Adicione presentes do catálogo para montar seu pedido especial</div><button class="btn-glow" onclick="goPage('catalog',null)">Ver Catálogo</button></div>`;
+    el.innerHTML = `<div class="cart-empty-wrap"><div class="cart-empty-icon"><i class="ti ti-heart" aria-hidden="true"></i></div><div class="cart-etitle">Carrinho vazio</div><div class="cart-esub">Adicione presentes do catálogo para montar seu pedido especial</div><button class="btn-glow" onclick="goPage('catalog',null)">Ver Catálogo</button></div>`;
     return;
   }
   
@@ -319,7 +320,6 @@ function renderCart(){
                 cart.map(i => `- ${i.name}: ${fmt(i.price)}`).join('\n') + 
                 `\n\nTotal: ${fmt(total)}`);
 
-  // Link direto do WhatsApp (mais estável no celular)
   const whatsappUrl = `https://wa.me/5521994958427?text=${msg}`;
 
   el.innerHTML = cart.map((item,idx)=>`
@@ -336,10 +336,10 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <!-- BOTÃO ALTERADO - Agora é link direto (igual ao Fale Conosco) -->
+      <!-- Versão mais simples e confiável possível -->
       <a href="${whatsappUrl}" 
-         target="_blank" 
-         class="wa-btn">
+         class="wa-btn"
+         style="text-decoration: none;">
         <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
         Finalizar pelo WhatsApp
       </a>
