@@ -330,20 +330,30 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <a href="https://wa.me/5521994958427?text=${msg}" 
-   target="_self" 
-   style="text-decoration:none; display:block; width:100%;">
-  <button type="button" class="wa-btn" style="width:100%; border:none; cursor:pointer;">
-    <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
-    Finalizar pelo WhatsApp
-  </button>
-</a>
+      <button 
+        type="button" 
+        class="wa-btn" 
+        onclick="finalizarWhatsApp('${msg}')">
+        <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
+        Finalizar pelo WhatsApp
+      </button>
     </div>`;
 }
 function abrirWhatsApp(msg) {
   const url = 'https://wa.me/5521994958427?text=' + msg;
-  // Tenta abrir em uma nova janela de forma mais "limpa"
-  window.open(url, '_blank', 'noopener,noreferrer');
+  window.location.href = url;
+}
+
+function finalizarWhatsApp(msg){
+  const url = `https://wa.me/5521994958427?text=${msg}`;
+
+  // Mobile
+  if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    window.location.href = url;
+  } else {
+    // Desktop
+    window.open(url, '_blank');
+  }
 }
 
 function removeCart(idx){cart.splice(idx,1);updateBadge();renderCart();}
