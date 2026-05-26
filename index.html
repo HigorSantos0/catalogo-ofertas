@@ -317,10 +317,10 @@ function renderCart(){
   
   const total = cart.reduce((s,i)=>s+i.price,0);
   
-  // Mensagem simplificada para evitar URL muito longa
-  const msgSimples = encodeURIComponent(`Olá! Gostaria de finalizar meu pedido. Total: ${fmt(total)}. Vou te passar os detalhes agora.`);
+  // Mensagem mais curta para evitar problemas no Chrome
+  const mensagem = `Olá! Gostaria de finalizar meu pedido.\nTotal: ${fmt(total)}\n\nItens:\n${cart.map(i => `- ${i.name} - ${fmt(i.price)}`).join('\n')}`;
 
-  const whatsappUrl = `https://wa.me/5521994958427?text=${msgSimples}`;
+  const encodedMsg = encodeURIComponent(mensagem);
 
   el.innerHTML = cart.map((item,idx)=>`
     <div class="ci">
@@ -336,13 +336,24 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <a href="${whatsappUrl}" 
-         class="wa-btn"
-         style="text-decoration: none; display: inline-block; width: 100%;">
+      <!-- Botão via JavaScript - Mais estável no Chrome Android -->
+      <button onclick="abrirWhatsFinalizar('${encodedMsg}')" 
+              class="wa-btn">
         <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
         Finalizar pelo WhatsApp
-      </a>
+      </button>
     </div>`;
+}
+function abrirWhatsFinalizar(encodedMsg) {
+  const url = `https://wa.me/5521994958427?text=${encodedMsg}`;
+  
+  // Estratégia específica para Chrome Android
+  window.location.href = url;
+  
+  // Fallback caso precise
+  setTimeout(() => {
+    window.open(url, '_blank');
+  }, 500);
 }
 function abrirWhatsApp(msg) {
   finalizarWhatsApp(msg);
