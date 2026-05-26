@@ -9,168 +9,237 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@200;300;400;500;600&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --r1:#E8003D;--r2:#C2007A;--r3:#FF5500;--gold:#C8860A;--gold2:#E6A020;
-  --bg:#FFF5F7;--bg2:#FFF0F3;--bg3:#FFE8EE;--surface:#FFFFFF;
-  --border:rgba(220,50,100,0.12);--border2:rgba(220,50,100,0.22);
-  --text:#1A040E;--text2:#6B2040;--text3:#A0507A;
+  --r1:#FF1744;--r2:#D500F9;--r3:#FF6D00;--gold:#FF9F1C;--gold2:#FF7B00;
+  --bg:#F8F9FA;--surface:#ffffff;
+  --text-main:#212529;--text-muted:#6C757D;--border:rgba(0,0,0,0.08);
   --serif:'Playfair Display',Georgia,serif;--sans:'Outfit',sans-serif;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(255,245,247,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
-.logo{font-family:var(--serif);font-size:1.35rem;font-weight:700;background:linear-gradient(135deg,var(--r1),var(--r2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;gap:.4rem}
-.logo i{-webkit-text-fill-color:var(--r1)}
-.nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{color:var(--text2);font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:color .2s;padding:.3rem 0;border-bottom:2px solid transparent}
+body{background:var(--bg);color:var(--text-main);font-family:var(--sans);overflow-x:hidden;min-height:100vh}
+canvas#particles{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.5}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 2rem;background:rgba(255,255,255,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
+.logo{font-family:var(--serif);font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,var(--r1),var(--r2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;gap:.4rem}
+.logo-icon{-webkit-text-fill-color:var(--r1);font-size:1rem}
+.nav-links{display:flex;gap:1.8rem;list-style:none}
+.nav-links a{color:var(--text-muted);font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:color .2s;padding:.3rem 0;border-bottom:1px solid transparent}
 .nav-links a:hover,.nav-links a.active{color:var(--r1);border-bottom-color:var(--r1)}
 .nav-right{display:flex;align-items:center;gap:1rem}
-.nav-phone{font-size:.75rem;color:var(--text2);border:1px solid var(--border2);padding:.35rem .9rem;border-radius:20px;display:flex;align-items:center;gap:.35rem;background:#fff}
-.cart-pill{background:linear-gradient(135deg,var(--r1),var(--r2));border:none;color:#fff;padding:.45rem 1rem;border-radius:20px;cursor:pointer;font-family:var(--sans);font-size:.75rem;font-weight:600;display:flex;align-items:center;gap:.4rem;box-shadow:0 4px 14px rgba(232,0,61,0.3);transition:box-shadow .2s,transform .15s}
-.cart-pill:hover{box-shadow:0 6px 20px rgba(232,0,61,0.4);transform:translateY(-1px)}
-.cart-pill span{background:rgba(0,0,0,0.2);border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:.65rem}
+.nav-phone{font-size:.75rem;color:var(--text-muted);border:1px solid var(--border);padding:.35rem .85rem;border-radius:20px;display:flex;align-items:center;gap:.35rem;font-weight:500}
+.cart-pill{background:linear-gradient(135deg,var(--r1),var(--r2));border:none;color:#fff;padding:.4rem .9rem;border-radius:20px;cursor:pointer;font-family:var(--sans);font-size:.75rem;font-weight:500;display:flex;align-items:center;gap:.4rem;transition:opacity .2s,transform .15s;box-shadow:0 4px 15px rgba(255,23,68,0.2)}
+.cart-pill:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,23,68,0.3)}
+.cart-pill span{background:rgba(255,255,255,0.2);border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700}
 .page{display:none}.page.active{display:block}
-.hero{min-height:90vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse 90% 70% at 60% 0%,rgba(255,120,160,0.18) 0%,transparent 65%),radial-gradient(ellipse 60% 50% at 10% 80%,rgba(255,80,0,0.1) 0%,transparent 60%),var(--bg)}
-.hero canvas{position:absolute;inset:0;pointer-events:none;z-index:0}
-.hero-inner{position:relative;z-index:2;text-align:center;padding:4rem 2rem 3rem;max-width:820px;margin:0 auto}
-.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:#fff;border:1px solid var(--border2);padding:.4rem 1.1rem;border-radius:30px;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--r1);margin-bottom:2rem;box-shadow:0 2px 12px rgba(232,0,61,0.1)}
-.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--r1);animation:blink 1.6s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hero-title{font-family:var(--serif);font-size:4.6rem;line-height:1.04;font-weight:900;margin-bottom:1.4rem;letter-spacing:-.02em;color:var(--text)}
-.hero-title em{font-style:italic;background:linear-gradient(120deg,var(--r1),var(--r2),var(--r3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:.98rem;color:var(--text3);line-height:1.8;max-width:460px;margin:0 auto 2.5rem;font-weight:300}
+.hero{min-height:92vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse 80% 80% at 50% -20%,rgba(213,0,249,0.06) 0%,transparent 60%),radial-gradient(ellipse 60% 60% at 80% 80%,rgba(255,23,68,0.05) 0%,transparent 60%),var(--bg)}
+.hero-inner{position:relative;z-index:2;text-align:center;padding:4rem 2rem 3rem;max-width:800px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid rgba(255,23,68,0.2);padding:.4rem 1.1rem;border-radius:30px;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-main);margin-bottom:2rem;box-shadow:0 4px 15px rgba(0,0,0,0.05)}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--r1);animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-title{font-family:var(--serif);font-size:4.5rem;line-height:1.05;font-weight:900;margin-bottom:1.5rem;letter-spacing:-.02em}
+.hero-title .line1{display:block;color:var(--text-main)}
+.hero-title .line2{display:block;background:linear-gradient(135deg,var(--r1) 0%,var(--r2) 50%,var(--r3) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic}
+.hero-sub{font-size:1rem;color:var(--text-muted);line-height:1.8;max-width:480px;margin:0 auto 2.5rem;font-weight:400}
 .hero-ctas{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap}
-.btn-glow{background:linear-gradient(135deg,var(--r1),var(--r2));border:none;color:#fff;padding:.9rem 2.2rem;border-radius:8px;cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 6px 24px rgba(232,0,61,0.35);transition:box-shadow .25s,transform .15s;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem}
-.btn-glow:hover{box-shadow:0 10px 36px rgba(232,0,61,0.5);transform:translateY(-2px)}
-.btn-ghost{background:#fff;border:1.5px solid var(--border2);color:var(--r1);padding:.9rem 2.2rem;border-radius:8px;cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem;box-shadow:0 2px 10px rgba(0,0,0,0.04);text-decoration:none}
-.btn-ghost:hover{background:var(--bg3);border-color:var(--r1)}
-.hero-cards{display:flex;justify-content:center;gap:1.2rem;margin-top:3.5rem;flex-wrap:wrap}
-.h-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:1.3rem 1.5rem;text-align:center;min-width:130px;box-shadow:0 8px 30px rgba(220,50,100,0.08);transition:transform .3s,box-shadow .3s}
-.h-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(220,50,100,0.15)}
-.h-card-emoji{font-size:2rem;margin-bottom:.4rem}
-.h-card-name{font-family:var(--serif);font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.2rem}
-.h-card-price{font-size:.8rem;font-weight:600;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.features{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.feat{padding:2rem 2.5rem;text-align:center;border-right:1px solid var(--border)}
+.btn-glow{background:linear-gradient(135deg,var(--r1),var(--r2));border:none;color:#fff;padding:.9rem 2.2rem;border-radius:6px;cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 8px 25px rgba(255,23,68,0.25);transition:box-shadow .3s,transform .15s}
+.btn-glow:hover{box-shadow:0 12px 35px rgba(255,23,68,0.35);transform:translateY(-2px)}
+.btn-ghost{background:var(--surface);border:1px solid rgba(0,0,0,0.15);color:var(--text-main);padding:.9rem 2.2rem;border-radius:6px;cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;transition:all .2s;box-shadow:0 4px 15px rgba(0,0,0,0.03)}
+.btn-ghost:hover{border-color:var(--text-main);transform:translateY(-2px)}
+.hero-cards{display:flex;justify-content:center;gap:1.5rem;margin-top:3.5rem;flex-wrap:wrap}
+.h-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.4rem 1.6rem;text-align:center;min-width:140px;box-shadow:0 4px 15px rgba(0,0,0,0.03);transition:transform .3s,border-color .3s,box-shadow .3s}
+.h-card:hover{transform:translateY(-6px);border-color:rgba(255,23,68,0.4);box-shadow:0 15px 30px rgba(255,23,68,0.1)}
+.h-card-emoji{font-size:2rem;margin-bottom:.5rem}
+.h-card-name{font-family:var(--serif);font-size:1.05rem;font-weight:700;color:var(--text-main);margin-bottom:.2rem}
+.h-card-price{font-size:.88rem;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700}
+.features{display:grid;grid-template-columns:repeat(3,1fr);background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.feat{padding:2rem;text-align:center;border-right:1px solid var(--border)}
 .feat:last-child{border-right:none}
-.feat-icon{font-size:1.5rem;margin-bottom:.6rem;background:linear-gradient(135deg,var(--r1),var(--r2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.feat-title{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.3rem}
-.feat-text{font-size:.76rem;color:var(--text3);line-height:1.65}
-.section{padding:5rem 2.5rem}
-.sec-eyebrow{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.6rem}
-.sec-title{font-family:var(--serif);font-size:3rem;font-weight:900;color:var(--text);line-height:1.05;margin-bottom:.5rem}
-.sec-title em{font-style:italic;background:linear-gradient(120deg,var(--r1),var(--r2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sec-sub{font-size:.88rem;color:var(--text3);margin-bottom:3rem}
-.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.pcard{background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:transform .3s,box-shadow .3s;cursor:pointer;position:relative}
-.pcard:hover{transform:translateY(-7px);box-shadow:0 20px 55px rgba(220,50,100,0.14)}
-.pcard-img{height:190px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.pcard-emoji{font-size:3.5rem;position:relative;z-index:2;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.15))}
-.pcard-fav{position:absolute;top:12px;right:12px;z-index:3;background:rgba(255,255,255,0.85);border:1px solid var(--border2);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.8rem;color:var(--text3);backdrop-filter:blur(6px);transition:all .2s}
-.pcard-fav:hover,.pcard-fav.active{background:#fff;border-color:var(--r1);color:var(--r1)}
-.pcard-badge{position:absolute;top:12px;left:12px;z-index:3;background:linear-gradient(135deg,var(--r1),var(--r2));color:#fff;font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.22rem .65rem;border-radius:20px;box-shadow:0 2px 8px rgba(232,0,61,0.3)}
-.pcard-body{padding:1.3rem}
-.pcard-name{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.35rem;line-height:1.3}
-.pcard-desc{font-size:.74rem;color:var(--text3);line-height:1.6;margin-bottom:1rem}
+.feat-icon{font-size:1.5rem;background:linear-gradient(135deg,var(--r1),var(--r2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.7rem}
+.feat-title{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--text-main);margin-bottom:.3rem}
+.feat-text{font-size:.8rem;color:var(--text-muted);line-height:1.6;font-weight:400}
+.section{padding:5rem 2rem;background:var(--surface)}
+.sec-eyebrow{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700;margin-bottom:.7rem}
+.sec-title{font-family:var(--serif);font-size:3rem;font-weight:900;color:var(--text-main);line-height:1.05;margin-bottom:.6rem}
+.sec-title em{font-style:italic;background:linear-gradient(135deg,var(--r1),var(--r2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-sub{font-size:.9rem;color:var(--text-muted);margin-bottom:3rem;font-weight:400}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.pcard{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s;cursor:pointer;position:relative;box-shadow:0 4px 15px rgba(0,0,0,0.03)}
+.pcard:hover{transform:translateY(-8px);border-color:rgba(255,23,68,0.3);box-shadow:0 20px 40px rgba(255,23,68,0.12)}
+.pcard-img{height:200px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.pcard-img-bg{position:absolute;inset:0}
+.pcard-emoji{font-size:4rem;position:relative;z-index:2;filter:drop-shadow(0 8px 15px rgba(0,0,0,0.15));transition:transform .3s}
+.pcard:hover .pcard-emoji{transform:scale(1.1)}
+.pcard-fav{position:absolute;top:12px;right:12px;z-index:3;background:rgba(255,255,255,0.9);border:1px solid rgba(0,0,0,0.1);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.9rem;color:var(--text-muted);box-shadow:0 2px 10px rgba(0,0,0,0.05);transition:all .2s}
+.pcard-fav:hover,.pcard-fav.active{background:#FFF0F1;border-color:var(--r1);color:var(--r1)}
+.pcard-badge{position:absolute;top:12px;left:12px;z-index:3;background:linear-gradient(135deg,var(--r1),var(--r2));color:#fff;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .7rem;border-radius:20px;box-shadow:0 4px 10px rgba(255,23,68,0.2)}
+.pcard-body{padding:1.4rem}
+.pcard-name{font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--text-main);margin-bottom:.4rem;line-height:1.3}
+.pcard-desc{font-size:.8rem;color:var(--text-muted);line-height:1.6;margin-bottom:1.2rem;font-weight:400}
 .pcard-footer{display:flex;align-items:center;justify-content:space-between}
-.pcard-price{font-family:var(--serif);font-size:1.45rem;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.add-btn{background:linear-gradient(135deg,var(--r1),var(--r2));color:#fff;border:none;cursor:pointer;padding:.5rem 1.1rem;border-radius:20px;font-family:var(--sans);font-size:.72rem;font-weight:600;letter-spacing:.04em;display:flex;align-items:center;gap:.35rem;box-shadow:0 3px 12px rgba(232,0,61,0.3);transition:opacity .2s,transform .15s}
-.add-btn:hover{opacity:.88;transform:scale(1.04)}
-.g1{background:linear-gradient(135deg,#FFD6E0,#FFADC5)}
-.g2{background:linear-gradient(135deg,#EDD6FF,#D4A8FF)}
-.g3{background:linear-gradient(135deg,#FFD6C4,#FFA882)}
-.g4{background:linear-gradient(135deg,#FFD6F0,#FF9EDA)}
-.g5{background:linear-gradient(135deg,#D6EEFF,#99CFFF)}
-.g6{background:linear-gradient(135deg,#D6FFE8,#89EDB5)}
-.cat-hero{background:linear-gradient(135deg,#fff 0%,var(--bg3) 60%,#FFD6E0 100%);padding:4rem 2.5rem;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.cat-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(232,0,61,0.07),transparent);pointer-events:none}
-.cart-pg{padding:3rem 2.5rem;max-width:760px;margin:0 auto}
+.pcard-price{font-family:var(--serif);font-size:1.6rem;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.add-btn{background:linear-gradient(135deg,var(--r1),var(--r2));color:#fff;border:none;cursor:pointer;padding:.6rem 1.2rem;border-radius:20px;font-family:var(--sans);font-size:.75rem;font-weight:600;letter-spacing:.04em;display:flex;align-items:center;gap:.4rem;transition:opacity .2s,transform .15s;box-shadow:0 4px 12px rgba(255,23,68,0.2)}
+.add-btn:hover{opacity:.9;transform:scale(1.03);box-shadow:0 6px 15px rgba(255,23,68,0.3)}
+.cat-hero{background:linear-gradient(135deg,var(--bg) 0%,rgba(213,0,249,0.03) 50%,rgba(255,23,68,0.03) 100%);padding:4rem 2rem;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.cat-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(255,23,68,0.05),transparent);pointer-events:none}
+.cart-pg{padding:3rem 2rem;max-width:760px;margin:0 auto}
 .cart-empty-wrap{text-align:center;padding:5rem 2rem}
-.cart-empty-icon{font-size:3.5rem;color:var(--border2);margin-bottom:1.2rem}
-.cart-etitle{font-family:var(--serif);font-size:2rem;color:var(--text);margin-bottom:.5rem}
-.cart-esub{font-size:.85rem;color:var(--text3);margin-bottom:2rem}
-.ci{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:#fff;border:1px solid var(--border);border-radius:14px;margin-bottom:.8rem;transition:border-color .2s,box-shadow .2s}
-.ci:hover{border-color:var(--border2);box-shadow:0 4px 16px rgba(220,50,100,0.07)}
-.ci-thumb{width:58px;height:58px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0}
+.cart-empty-icon{font-size:4rem;opacity:.15;margin-bottom:1.2rem;color:var(--text-main)}
+.cart-etitle{font-family:var(--serif);font-size:2.2rem;color:var(--text-main);margin-bottom:.5rem;font-weight:700}
+.cart-esub{font-size:.9rem;color:var(--text-muted);margin-bottom:2rem}
+.ci{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:.8rem;box-shadow:0 2px 10px rgba(0,0,0,0.02);transition:border-color .2s,box-shadow .2s}
+.ci:hover{border-color:rgba(255,23,68,.3);box-shadow:0 4px 15px rgba(255,23,68,.08)}
+.ci-thumb{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0}
 .ci-info{flex:1}
-.ci-name{font-family:var(--serif);font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.15rem}
-.ci-desc{font-size:.72rem;color:var(--text3)}
-.ci-price{font-family:var(--serif);font-size:1.15rem;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.ci-remove{background:none;border:none;color:var(--text3);cursor:pointer;font-size:.9rem;padding:.3rem;transition:color .15s}
+.ci-name{font-family:var(--serif);font-size:1.05rem;font-weight:700;color:var(--text-main);margin-bottom:.2rem}
+.ci-desc{font-size:.75rem;color:var(--text-muted)}
+.ci-price{font-family:var(--serif);font-size:1.25rem;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700}
+.ci-remove{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1rem;padding:.4rem;transition:color .15s}
 .ci-remove:hover{color:var(--r1)}
-.cart-sum{background:linear-gradient(135deg,rgba(232,0,61,0.06),rgba(194,0,122,0.06));border:1.5px solid var(--border2);border-radius:18px;padding:1.8rem;margin-top:1.5rem}
-.sum-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:.3rem}
-.sum-total{font-family:var(--serif);font-size:2.6rem;font-weight:900;background:linear-gradient(135deg,var(--r1),var(--r2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.2rem}
-.wa-btn{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;cursor:pointer;width:100%;padding:1rem;border-radius:10px;font-family:var(--sans);font-size:.9rem;font-weight:600;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;gap:.5rem;box-shadow:0 4px 18px rgba(37,211,102,0.3);transition:opacity .2s,transform .1s;text-decoration:none}
-.wa-btn:hover{opacity:.9;transform:translateY(-1px)}
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(16px);background:linear-gradient(135deg,var(--r1),var(--r2));color:#fff;padding:.7rem 1.6rem;border-radius:30px;font-size:.8rem;font-weight:600;z-index:999;opacity:0;pointer-events:none;transition:all .32s;white-space:nowrap;box-shadow:0 6px 24px rgba(232,0,61,0.35)}
+.cart-sum{background:var(--surface);border:1px solid rgba(255,23,68,0.2);border-radius:16px;padding:1.8rem;margin-top:1.5rem;box-shadow:0 10px 30px rgba(255,23,68,0.05)}
+.sum-label{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.4rem;font-weight:600}
+.sum-total{font-family:var(--serif);font-size:2.8rem;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.5rem}
+.wa-btn{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;cursor:pointer;width:100%;padding:1.1rem;border-radius:10px;font-family:var(--sans);font-size:.95rem;font-weight:600;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:all .2s;box-shadow:0 6px 20px rgba(37,211,102,0.25)}
+.wa-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,211,102,0.35)}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:linear-gradient(135deg,var(--r1),var(--r2));color:#fff;padding:.8rem 1.8rem;border-radius:30px;font-size:.85rem;font-weight:600;z-index:999;opacity:0;pointer-events:none;transition:all .35s;white-space:nowrap;box-shadow:0 8px 25px rgba(255,23,68,.3)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Novos Gradientes Pastéis e Suaves para os emojis brilharem */
+.g1{background:linear-gradient(135deg,#FFE0E5 0%,#FFB3C1 100%)}
+.g2{background:linear-gradient(135deg,#F3E5F5 0%,#E1BEE7 100%)}
+.g3{background:linear-gradient(135deg,#FFF3E0 0%,#FFE0B2 100%)}
+.g4{background:linear-gradient(135deg,#FCE4EC 0%,#F8BBD0 100%)}
+.g5{background:linear-gradient(135deg,#E0F7FA 0%,#B2EBF2 100%)}
+.g6{background:linear-gradient(135deg,#E8F5E9 0%,#C8E6C9 100%)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+/* =========================================
+   RESPONSIVIDADE PARA CELULARES
+   ========================================= */
+@media (max-width: 768px) {
+  /* Impede que o site vaze para as laterais */
+  body, html { overflow-x: hidden; width: 100%; }
+  
+  /* Ajusta o menu do topo */
+  .nav { padding: 1rem; flex-wrap: wrap; justify-content: center; gap: 0.8rem; }
+  .nav-phone { display: none; } /* Oculta o telefone em telas pequenas para dar espaço */
+  .nav-links { gap: 1rem; width: 100%; justify-content: center; margin-bottom: 0.5rem; }
+  
+  /* Reduz os títulos gigantes */
+  .hero-title { font-size: 2.5rem; }
+  .sec-title { font-size: 2.2rem; }
+  .hero-inner { padding: 2rem 1rem; }
+  
+  /* Empilha os botões no celular */
+  .hero-ctas { flex-direction: column; width: 100%; gap: 1rem; }
+  .hero-ctas button, .hero-ctas a { width: 100%; text-align: center; }
+  
+  /* Empilha os 3 diferenciais (Feito com carinho, etc) */
+  .features { grid-template-columns: 1fr; }
+  .feat { border-right: none !important; border-bottom: 1px solid var(--border); padding: 1.5rem; }
+  .feat:last-child { border-bottom: none; }
+  
+  /* Ajusta os espaçamentos das sessões */
+  .section, .cat-hero, .cart-pg { padding: 2rem 1.2rem; }
+  
+  /* Arruma a lista do carrinho para não espremer os itens */
+  .ci { position: relative; padding-right: 3rem; }
+  .ci-remove { position: absolute; top: 1rem; right: 0.5rem; }
+}
 </style>
 </head>
 <body>
 
 <nav class="nav">
-  <div class="logo"><i class="ti ti-heart" aria-hidden="true" style="-webkit-text-fill-color:var(--r1);font-size:1rem"></i>CestasPresentesP</div>
+  <div class="logo">
+    <i class="ti ti-heart logo-icon" aria-hidden="true"></i>
+    CestasPresentesP
+  </div>
   <ul class="nav-links">
     <li><a class="active" onclick="goPage('home',this)">Home</a></li>
     <li><a onclick="goPage('catalog',this)">Catálogo</a></li>
     <li><a onclick="goPage('cart',this)">Carrinho</a></li>
   </ul>
   <div class="nav-right">
-    <div class="nav-phone"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i>(21) 99495-8427</div>
-    <button class="cart-pill" onclick="goPage('cart',null)"><i class="ti ti-shopping-bag" aria-hidden="true"></i>Carrinho<span id="cartBadge">0</span></button>
+    <div class="nav-phone"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i> (21) 99495-8427</div>
+    <button class="cart-pill" onclick="goPage('cart',null)">
+      <i class="ti ti-shopping-bag" aria-hidden="true"></i>
+      Carrinho <span id="cartBadge">0</span>
+    </button>
   </div>
 </nav>
 
+<!-- HOME -->
 <div class="page active" id="page-home">
-  <div class="hero" id="heroSec">
+  <div class="hero" id="heroSection">
     <canvas id="particles"></canvas>
     <div class="hero-inner">
-      <div class="hero-badge"><span class="badge-dot"></span>Dia dos Namorados 2026 — Coleção Especial</div>
-      <h1 class="hero-title">Presentes que falam<br><em>ao coração</em></h1>
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Dia dos Namorados 2026 — Coleção Especial
+      </div>
+      <h1 class="hero-title">
+        <span class="line1">Presentes que</span>
+        <span class="line2">falam ao coração</span>
+      </h1>
       <p class="hero-sub">Cestas exclusivas, buquês deslumbrantes e mimos únicos. Cada detalhe pensado para tornar seu momento inesquecível.</p>
       <div class="hero-ctas">
         <button class="btn-glow" onclick="goPage('catalog',null)">Explorar Catálogo</button>
-        <a href="https://wa.me/5521994958427?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20as%20cestas" class="btn-ghost"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i>Falar conosco</a>
+        <a href="https://wa.me/5521994958427" class="btn-ghost" target="_blank" style="text-decoration:none; display:inline-block;">
+          <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Falar conosco
+        </a>
       </div>
       <div class="hero-cards" id="heroCards"></div>
     </div>
   </div>
 
   <div class="features">
-    <div class="feat"><div class="feat-icon"><i class="ti ti-heart-handshake" aria-hidden="true"></i></div><div class="feat-title">Feito com carinho</div><div class="feat-text">Cada presente montado artesanalmente com atenção a cada detalhe especial.</div></div>
-    <div class="feat"><div class="feat-icon"><i class="ti ti-truck-delivery" aria-hidden="true"></i></div><div class="feat-title">Entrega premium</div><div class="feat-text">Embalagem exclusiva, cartão personalizado e entrega certeira no grande dia.</div></div>
-    <div class="feat"><div class="feat-icon"><i class="ti ti-award" aria-hidden="true"></i></div><div class="feat-title">Qualidade selecionada</div><div class="feat-text">Ferrero Rocher, pelúcias importadas e flores sempre fresquíssimas.</div></div>
+    <div class="feat">
+      <div class="feat-icon"><i class="ti ti-heart-handshake" aria-hidden="true"></i></div>
+      <div class="feat-title">Feito com carinho</div>
+      <div class="feat-text">Cada presente montado artesanalmente com atenção total aos detalhes.</div>
+    </div>
+    <div class="feat">
+      <div class="feat-icon"><i class="ti ti-truck-delivery" aria-hidden="true"></i></div>
+      <div class="feat-title">Entrega premium</div>
+      <div class="feat-text">Embalagem exclusiva com cartão personalizado e entrega pontual.</div>
+    </div>
+    <div class="feat">
+      <div class="feat-icon"><i class="ti ti-award" aria-hidden="true"></i></div>
+      <div class="feat-title">Qualidade selecionada</div>
+      <div class="feat-text">Ferrero Rocher, pelúcias importadas e flores fresquíssimas.</div>
+    </div>
   </div>
 
-  <div class="section" style="background:var(--bg2)">
-    <div style="text-align:center">
+  <div class="section" style="background:var(--dark2)">
+    <div style="text-align:center;margin-bottom:3.5rem">
       <div class="sec-eyebrow">Mais pedidos</div>
       <h2 class="sec-title">Destaques da <em>coleção</em></h2>
       <p class="sec-sub">Os favoritos dos apaixonados para o grande dia</p>
     </div>
     <div class="pgrid" id="homeGrid"></div>
-    <div style="text-align:center;margin-top:2.5rem"><button class="btn-ghost" onclick="goPage('catalog',null)" style="margin:0 auto">Ver catálogo completo →</button></div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <button class="btn-ghost" onclick="goPage('catalog',null)" style="padding:.75rem 2rem;font-size:.8rem">Ver catálogo completo →</button>
+    </div>
   </div>
 </div>
 
+<!-- CATALOG -->
 <div class="page" id="page-catalog">
   <div class="cat-hero">
     <div style="position:relative;z-index:1">
-      <div class="sec-eyebrow">Coleção Dia dos Namorados 2026</div>
-      <h1 class="sec-title">Nosso <em>Catálogo</em></h1>
-      <p style="font-size:.9rem;color:var(--text3);max-width:400px;margin:.4rem auto 0">Descubra presentes especiais feitos com carinho para celebrar o amor</p>
+      <div class="sec-eyebrow" style="margin-bottom:.6rem">Coleção Dia dos Namorados 2026</div>
+      <h1 class="sec-title" style="font-size:3rem">Nosso <em>Catálogo</em></h1>
+      <p style="font-size:.88rem;color:rgba(255,255,255,0.4);max-width:400px;margin:0 auto">Descubra presentes especiais feitos com carinho para celebrar o amor</p>
     </div>
   </div>
-  <div style="padding:3rem 2.5rem;background:var(--bg)">
+  <div style="padding:3rem 2rem;background:var(--dark)">
     <div class="pgrid" id="catalogGrid"></div>
   </div>
 </div>
 
+<!-- CART -->
 <div class="page" id="page-cart">
   <div class="cart-pg">
     <div style="margin-bottom:2rem">
       <div class="sec-eyebrow">Seu pedido</div>
-      <h1 class="sec-title" style="font-size:2.2rem">Carrinho</h1>
-      <p style="font-size:.82rem;color:var(--text3)">Revise seus presentes antes de finalizar</p>
+      <h1 class="sec-title" style="font-size:2.2rem;margin-bottom:.2rem">Carrinho</h1>
+      <p style="font-size:.82rem;color:rgba(255,255,255,0.35)">Revise seus presentes antes de finalizar</p>
     </div>
     <div id="cartContent"></div>
   </div>
@@ -180,21 +249,25 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 
 <script>
 const PRODS=[
-  {id:1,emoji:'🧺',name:'Cesta Vida + Ursinho Mini',short:'Cesta Vida',desc:'Cesta especial com Coca-Cola, chocolates Ferrero Rocher e ursinho de pelúcia branco. Perfeita para demonstrar carinho e amor.',price:130,g:'g1',badge:''},
-  {id:2,emoji:'💝',name:'Cesta Amor + Ursinho + Balão',short:'Cesta Amor',desc:'Cesta romântica com fotos personalizadas, ursinho de pelúcia e chocolates selecionados. Inclui balão decorativo.',price:145,g:'g2',badge:'Mais pedido'},
-  {id:3,emoji:'🌹',name:'Buquê + Balão + Ferrero Rocher',short:'Buquê Rosas',desc:'Lindo buquê de rosas vermelhas em formato de coração acompanhado de Ferrero Rocher e balão decorativo.',price:160,g:'g3',badge:''},
-  {id:4,emoji:'🎀',name:'Kit Romance + Velas + Chocolates',short:'Kit Romance',desc:'Kit completo para uma noite especial com velas aromáticas, chocolates finos e cartão personalizado.',price:185,g:'g4',badge:'Exclusivo'},
-  {id:5,emoji:'🍫',name:'Cesta Doce + Pelúcia + Balão',short:'Cesta Doce',desc:'Cesta recheada de chocolates artesanais, trufas e doces acompanhada de pelúcia e balão temático.',price:120,g:'g5',badge:''},
-  {id:6,emoji:'🌸',name:'Buquê Mix + Ferrero + Urso',short:'Buquê Mix',desc:'Buquê colorido com flores variadas, caixa de Ferrero Rocher 16 unidades e ursinho de pelúcia.',price:175,g:'g6',badge:''},
+  {id:1, img:'Fotos/cesta-vida.jpeg', name:'Cesta Vida + Urso + Coca', short:'Cesta Vida', desc:'Caixote de madeira rústico com urso de pelúcia, 2 latas de Coca-Cola, petiscos e bombons.', price:130, g:'g1', badge:''},
+  {id:2, img:'Fotos/cesta-amor.jpeg', name:'Cesta Amor + Fotos + Urso', short:'Cesta Amor', desc:'Caixa romântica decorada com fotos polaroid, ursinho, Nutella, Doritos, Fini e Trento.', price:145, g:'g2', badge:'Mais pedido'},
+  {id:3, img:'Fotos/buque.jpeg', name:'Buquê de Rosas + Ferrero', short:'Buquê Rosas', desc:'Clássico e romântico buquê de rosas vermelhas acompanhado de bombons Ferrero Rocher e balão.', price:160, g:'g3', badge:''},
+  {id:4, img:'Fotos/cesta-premium.jpeg', name:'Cesta Coração + Bolo + Heineken', short:'Cesta Premium', desc:'Cesta luxo em formato de coração com mini bolo, cervejas Heineken, tábua de frios, amendoins e fotos.', price:185, g:'g4', badge:'Exclusivo'},
+  {id:5, img:'Fotos/box-snacks.jpeg', name:'Box Black Snacks + Balão', short:'Box Snacks', desc:'Elegante box preto com laço vermelho recheado com Pringles, Doritos, Nutella, KitKat e balão.', price:120, g:'g5', badge:''},
+  {id:6, img:'Fotos/ferrero.jpeg', name:'Mimo Ferrero + Balão', short:'Mimo Ferrero', desc:'Presente delicado com uma caixa de bombons Ferrero Rocher e um lindo balão de coração "Te amo".', price:75, g:'g6', badge:''},
+  {id:7, img:'Fotos/mimo.jpeg', name:'Caixa Mimo Chocolates', short:'Caixa Chocolates', desc:'Caixa recheada de delícias contendo caixa de bombons Garoto, Bis, Ouro Branco e Baton.', price:85, g:'g1', badge:'Novidade'},
 ];
+
 let cart=[],favs=new Set();
-const fmt=v=>'R$ '+v.toFixed(2).replace('.',',');
+
+function fmt(v){return'R$ '+v.toFixed(2).replace('.',',')}
 
 function cardHTML(p){
   return`<div class="pcard" id="pc${p.id}">
-    <div class="pcard-img ${p.g}">
+    <div class="pcard-img">
+      <div class="pcard-img-bg ${p.g}"></div>
       ${p.badge?`<div class="pcard-badge">${p.badge}</div>`:''}
-      <span class="pcard-emoji">${p.emoji}</span>
+      <img src="${p.img}" alt="${p.short}" style="width:130px; height:130px; object-fit:cover; border-radius:50%; position:relative; z-index:2; box-shadow:0 8px 20px rgba(0,0,0,0.15); border:4px solid #fff; transition:transform .3s;">
       <button class="pcard-fav${favs.has(p.id)?' active':''}" onclick="toggleFav(${p.id},this)" aria-label="Favoritar"><i class="ti ti-heart" aria-hidden="true"></i></button>
     </div>
     <div class="pcard-body">
@@ -202,97 +275,119 @@ function cardHTML(p){
       <div class="pcard-desc">${p.desc}</div>
       <div class="pcard-footer">
         <span class="pcard-price">${fmt(p.price)}</span>
-        <button class="add-btn" id="ab${p.id}" onclick="addCart(${p.id})"><i class="ti ti-shopping-cart" aria-hidden="true"></i>Adicionar</button>
+        <button class="add-btn" id="abtn${p.id}" onclick="addCart(${p.id})"><i class="ti ti-shopping-cart" aria-hidden="true"></i> Adicionar</button>
       </div>
     </div>
   </div>`;
 }
-function hCardHTML(p){return`<div class="h-card"><div class="h-card-emoji">${p.emoji}</div><div class="h-card-name">${p.short}</div><div class="h-card-price">${fmt(p.price)}</div></div>`;}
+
+function heroCardHTML(p){
+  return `<div class="h-card">
+    <img src="${p.img}" alt="${p.short}" style="width:55px; height:55px; object-fit:cover; border-radius:12px; margin-bottom:.6rem; box-shadow:0 4px 10px rgba(0,0,0,0.08);">
+    <div class="h-card-name">${p.short}</div>
+    <div class="h-card-price">${fmt(p.price)}</div>
+  </div>`;
+}
 
 function initRender(){
-  document.getElementById('heroCards').innerHTML=PRODS.slice(0,3).map(hCardHTML).join('');
-  document.getElementById('homeGrid').innerHTML=PRODS.slice(0,3).map(cardHTML).join('');
+  document.getElementById('heroCards').innerHTML=PRODS.slice(0,3).map(heroCardHTML).join('');
+  document.getElementById('homeGrid').innerHTML=PRODS.map(cardHTML).join('');
   document.getElementById('catalogGrid').innerHTML=PRODS.map(cardHTML).join('');
 }
+
 function toggleFav(id,btn){favs.has(id)?favs.delete(id):favs.add(id);btn.classList.toggle('active');}
+
 function addCart(id){
   const p=PRODS.find(x=>x.id===id);
   cart.push({...p,uid:Date.now()+Math.random()});
   updateBadge();showToast(p.short+' adicionado! 🛍️');
-  const btn=document.getElementById('ab'+id);
-  if(btn){btn.innerHTML='✓ Adicionado';btn.style.background='linear-gradient(135deg,#25D366,#128C7E)';setTimeout(()=>{btn.innerHTML='<i class="ti ti-shopping-cart" aria-hidden="true"></i>Adicionar';btn.style.background='';},1600);}
+  const btn=document.getElementById('abtn'+id);
+  if(btn){btn.innerHTML='✓ Adicionado';btn.style.background='linear-gradient(135deg,#25D366,#128C7E)';setTimeout(()=>{btn.innerHTML='<i class="ti ti-shopping-cart" aria-hidden="true"></i> Adicionar';btn.style.background='';},1500);}
 }
+
 function updateBadge(){document.getElementById('cartBadge').textContent=cart.length;}
 
-function renderCart(){
-  const el=document.getElementById('cartContent');
-  if(!cart.length){
-    el.innerHTML=`<div class="cart-empty-wrap"><div class="cart-empty-icon"><i class="ti ti-heart" aria-hidden="true"></i></div><div class="cart-etitle">Carrinho vazio</div><div class="cart-esub">Adicione presentes do catálogo para montar seu pedido especial</div><button class="btn-glow" style="margin:0 auto" onclick="goPage('catalog',null)">Ver Catálogo</button></div>`;
-    return;
-  }
-  const total=cart.reduce((s,i)=>s+i.price,0);
-  
-  let mensagem='Olá! Gostaria de finalizar meu pedido:\n\n';
-  cart.forEach(item=>{mensagem+=`- ${item.name}: ${fmt(item.price)}\n`;});
-  mensagem+=`\nTotal: ${fmt(total)}`;
-  
-  const whatsappUrl=`https://wa.me/5521994958427?text=${encodeURIComponent(mensagem)}`;
-  
-  el.innerHTML=cart.map((item,idx)=>`<div class="ci"><div class="ci-thumb ${item.g}">${item.emoji}</div><div class="ci-info"><div class="ci-name">${item.name}</div><div class="ci-desc">${item.desc.slice(0,58)}…</div></div><div class="ci-price">${fmt(item.price)}</div><button class="ci-remove" onclick="removeCart(${idx})" aria-label="Remover"><i class="ti ti-x" aria-hidden="true"></i></button></div>`).join('')
-  +`<div class="cart-sum"><div class="sum-label">Total do pedido</div><div class="sum-total">${fmt(total)}</div><a href="${whatsappUrl}" class="wa-btn"><i class="ti ti-brand-whatsapp" style="font-size:1.1rem" aria-hidden="true"></i>Finalizar pelo WhatsApp</a></div>`;
+function openWhatsApp(numero, mensagem) {
+  let telefone = numero.replace(/\D/g, '');
+  if (!telefone.startsWith('55')) telefone = '55' + telefone;
+  const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+  window.location.href = url;
 }
 
+// ==================== FUNÇÃO PRINCIPAL ====================
+function renderCart(){
+  const el = document.getElementById('cartContent');
+  
+  if(!cart.length){
+    el.innerHTML = `<div class="cart-empty-wrap"><div class="cart-empty-icon"><i class="ti ti-heart" aria-hidden="true"></i></div><div class="cart-etitle">Carrinho vazio</div><div class="cart-esub">Adicione presentes do catálogo para montar seu pedido especial</div><button class="btn-glow" onclick="goPage('catalog',null)">Ver Catálogo</button></div>`;
+    return;
+  }
+  
+  const total = cart.reduce((s,i)=>s+i.price,0);
+
+  let mensagem = 'Olá! Gostaria de finalizar meu pedido:\n\n';
+  cart.forEach(item => { mensagem += `- ${item.name}: ${fmt(item.price)}\n`; });
+  mensagem += `\nTotal: ${fmt(total)}`;
+  const waUrl = `https://wa.me/5521994958427?text=${encodeURIComponent(mensagem)}`;
+
+  el.innerHTML = cart.map((item,idx)=>`
+    <div class="ci">
+      <img src="${item.img}" alt="${item.short}" style="width:64px; height:64px; object-fit:cover; border-radius:12px; flex-shrink:0; border:1px solid rgba(0,0,0,0.08);">
+      <div class="ci-info">
+        <div class="ci-name">${item.name}</div>
+        <div class="ci-desc">${item.desc.slice(0,55)}…</div>
+      </div>
+      <div class="ci-price">${fmt(item.price)}</div>
+      <button class="ci-remove" onclick="removeCart(${idx})" aria-label="Remover"><i class="ti ti-x" aria-hidden="true"></i></button>
+    </div>`).join('') + `
+    <div class="cart-sum">
+      <div class="sum-label">Total do pedido</div>
+      <div class="sum-total">${fmt(total)}</div>
+      
+      <a href="${waUrl}" class="wa-btn">
+    <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> 
+    Finalizar pelo WhatsApp
+</a>
+    </div>`;
+}
+
+// ==================== OUTRAS FUNÇÕES ====================
 function removeCart(idx){cart.splice(idx,1);updateBadge();renderCart();}
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2300);}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+
 function goPage(name,link){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
   if(link)link.classList.add('active');
   if(name==='cart')renderCart();
+  window.scrollTo(0,0);
 }
 
 function initParticles(){
   const canvas=document.getElementById('particles');
-  const hero=document.getElementById('heroSec');
+  const hero=document.getElementById('heroSection');
   if(!canvas||!hero)return;
   const ctx=canvas.getContext('2d');
-  const resize=()=>{canvas.width=hero.offsetWidth;canvas.height=hero.offsetHeight;};
-  resize();
-  const P=Array.from({length:40},()=>({
-    x:Math.random()*canvas.width, y:Math.random()*canvas.height,
-    r:Math.random()*3+1,
-    vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3,
-    a:Math.random()*.5+.1, da:(Math.random()-.5)*.005,
-    hue:Math.random()<.6?340:20
-  }));
-  const draw=()=>{
+  function resize(){canvas.width=hero.offsetWidth;canvas.height=hero.offsetHeight;}
+  resize();window.addEventListener('resize',resize);
+  const P=[];
+  for(let i=0;i<55;i++){P.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2.5+.5,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,a:Math.random(),da:(Math.random()-.5)*.008,hue:Math.random()<.5?0:300});}
+  function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    P.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;p.a+=p.da;
-      if(p.a<.05||p.a>.55)p.da*=-1;
-      if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;
-      if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`hsla(${p.hue},90%,65%,${p.a})`;ctx.fill();
-    });
+    P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.a+=p.da;if(p.a<=0||p.a>=1)p.da*=-1;if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`hsla(${p.hue},100%,70%,${p.a*.6})`;ctx.fill();});
     requestAnimationFrame(draw);
-  };
+  }
   draw();
 }
 
 function initReveal(){
-  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
-    if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0) scale(1)';}
-  }),{threshold:.08});
-  document.querySelectorAll('.pcard,.feat,.h-card').forEach((el,i)=>{
-    el.style.cssText+='opacity:0;transform:translateY(22px) scale(.98);transition:opacity .5s ease '+i*.07+'s, transform .5s ease '+i*.07+'s';
-    obs.observe(el);
-  });
+  const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});},{threshold:.1});
+  document.querySelectorAll('.pcard,.feat,.h-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(24px)';el.style.transition='opacity .5s ease, transform .5s ease';obs.observe(el);});
 }
 
 initRender();
-setTimeout(()=>{initParticles();initReveal();},80);
+setTimeout(()=>{initParticles();initReveal();},100);
 </script>
 </body>
 </html>
