@@ -307,6 +307,47 @@ function addCart(id){
 
 function updateBadge(){document.getElementById('cartBadge').textContent=cart.length;}
 
+function openWhatsApp(numero, mensagem) {
+  // Remove tudo que não for dígito do número
+  let telefone = numero.replace(/\D/g, '');
+  // Garante que tenha código do país (55) no início
+  if (!telefone.startsWith('55')) telefone = '55' + telefone;
+  
+  const texto = encodeURIComponent(mensagem);
+  
+  // 1. Tenta abrir diretamente o aplicativo (whatsapp://)
+  const appUrl = `whatsapp://send?phone=${telefone}&text=${texto}`;
+  // 2. Fallback: link web (wa.me)
+  const webUrl = `https://wa.me/${telefone}?text=${texto}`;
+  
+  // Cria um elemento <a> temporário para tentar o app
+  const iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  iframe.src = appUrl;
+  document.body.appendChild(iframe);
+  
+  // Se após 2,5 segundos o app não abrir (navegador não redirecionou), usa o web fallback
+  const timeout = setTimeout(() => {
+    window.open(webUrl, '_blank', 'noopener,noreferrer');
+    document.body.removeChild(iframe);
+  }, 2500);
+  
+  // Se o iframe conseguir mudar a página (app aberto), limpa o timeout
+  window.addEventListener('blur', () => {
+    clearTimeout(timeout);
+    document.body.removeChild(iframe);
+  });
+  
+  // Fallback caso o evento blur não dispare
+  setTimeout(() => {
+    if (document.body.contains(iframe)) {
+      clearTimeout(timeout);
+      window.open(webUrl, '_blank', 'noopener,noreferrer');
+      document.body.removeChild(iframe);
+    }
+  }, 3000);
+}
+
 // ==================== FUNÇÃO PRINCIPAL ====================
 function renderCart(){
   const el = document.getElementById('cartContent');
@@ -318,7 +359,6 @@ function renderCart(){
   
   const total = cart.reduce((s,i)=>s+i.price,0);
   const mensagem = `Olá! Gostaria de finalizar meu pedido. Total: ${fmt(total)}.`;
-  const whatsappUrl = `https://wa.me/5521994958427?text=${encodeURIComponent(mensagem)}`;
 
   el.innerHTML = cart.map((item,idx)=>`
     <div class="ci">
@@ -334,10 +374,10 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <a href="${whatsappUrl}" target="_blank" class="wa-btn" style="text-decoration:none; display:block; width:100%;">
-        <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
-        Finalizar pelo WhatsApp
-      </a>
+      <button class="wa-btn" onclick="openWhatsApp('5521994958427', '${mensagem.replace(/'/g, "\\'")}')" style="width:100%; border:none;">
+    <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> 
+    Finalizar pelo WhatsApp
+</button>
     </div>`;
 }
 
