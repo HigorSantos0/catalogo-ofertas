@@ -308,44 +308,11 @@ function addCart(id){
 function updateBadge(){document.getElementById('cartBadge').textContent=cart.length;}
 
 function openWhatsApp(numero, mensagem) {
-  // Remove tudo que não for dígito do número
   let telefone = numero.replace(/\D/g, '');
-  // Garante que tenha código do país (55) no início
   if (!telefone.startsWith('55')) telefone = '55' + telefone;
-  
   const texto = encodeURIComponent(mensagem);
-  
-  // 1. Tenta abrir diretamente o aplicativo (whatsapp://)
-  const appUrl = `whatsapp://send?phone=${telefone}&text=${texto}`;
-  // 2. Fallback: link web (wa.me)
-  const webUrl = `https://wa.me/${telefone}?text=${texto}`;
-  
-  // Cria um elemento <a> temporário para tentar o app
-  const iframe = document.createElement('iframe');
-  iframe.style.display = 'none';
-  iframe.src = appUrl;
-  document.body.appendChild(iframe);
-  
-  // Se após 2,5 segundos o app não abrir (navegador não redirecionou), usa o web fallback
-  const timeout = setTimeout(() => {
-    window.open(webUrl, '_blank', 'noopener,noreferrer');
-    document.body.removeChild(iframe);
-  }, 2500);
-  
-  // Se o iframe conseguir mudar a página (app aberto), limpa o timeout
-  window.addEventListener('blur', () => {
-    clearTimeout(timeout);
-    document.body.removeChild(iframe);
-  });
-  
-  // Fallback caso o evento blur não dispare
-  setTimeout(() => {
-    if (document.body.contains(iframe)) {
-      clearTimeout(timeout);
-      window.open(webUrl, '_blank', 'noopener,noreferrer');
-      document.body.removeChild(iframe);
-    }
-  }, 3000);
+  const url = `https://wa.me/${telefone}?text=${texto}`;
+  window.location.href = url;
 }
 
 // ==================== FUNÇÃO PRINCIPAL ====================
