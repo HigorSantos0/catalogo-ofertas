@@ -318,7 +318,8 @@ function renderCart(){
   
   const total = cart.reduce((s,i)=>s+i.price,0);
   
-  const mensagem = `Olá! Gostaria de finalizar meu pedido.\nTotal: ${fmt(total)}\n\nItens:\n${cart.map(i => `- ${i.name} - ${fmt(i.price)}`).join('\n')}`;
+  // Mensagem bem curta
+  const mensagem = `Olá! Gostaria de finalizar meu pedido. Total: ${fmt(total)}.`;
   const encodedMsg = encodeURIComponent(mensagem);
 
   el.innerHTML = cart.map((item,idx)=>`
@@ -345,18 +346,15 @@ function renderCart(){
 
 function abrirWhatsFinalizar(encodedMsg) {
   const numero = "5521994958427";
-  const text = encodedMsg;
+  const url = `https://wa.me/${numero}?text=${encodedMsg}`;
   
-  // Intent para Android (mais confiável no Chrome)
-  const intentUrl = `intent://send?phone=${numero}&text=${text}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+  // Abre de forma mais "natural" pro Chrome Android
+  window.open(url, '_blank');
   
-  // Tenta várias formas
-  window.location.href = intentUrl;
-  
-  // Fallbacks
+  // Fallback caso o _blank não funcione
   setTimeout(() => {
-    window.location.href = `https://wa.me/${numero}?text=${text}`;
-  }, 400);
+    window.location.href = url;
+  }, 200);
 }
 
 // ==================== OUTRAS FUNÇÕES ====================
