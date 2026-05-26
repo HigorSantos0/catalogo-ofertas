@@ -319,6 +319,7 @@ function renderCart(){
   const total = cart.reduce((s,i)=>s+i.price,0);
   
   // Mensagem bem curta
+  // Dentro da função renderCart(), troque esta parte:
   const mensagem = `Olá! Gostaria de finalizar meu pedido. Total: ${fmt(total)}.`;
   const encodedMsg = encodeURIComponent(mensagem);
 
@@ -348,13 +349,8 @@ function abrirWhatsFinalizar(encodedMsg) {
   const numero = "5521994958427";
   const url = `https://wa.me/${numero}?text=${encodedMsg}`;
   
-  // Abre de forma mais "natural" pro Chrome Android
-  window.open(url, '_blank');
-  
-  // Fallback caso o _blank não funcione
-  setTimeout(() => {
-    window.location.href = url;
-  }, 200);
+  // Método mais confiável para Chrome Android atualmente
+  window.location.href = url;
 }
 
 // ==================== OUTRAS FUNÇÕES ====================
