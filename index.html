@@ -307,6 +307,7 @@ function addCart(id){
 
 function updateBadge(){document.getElementById('cartBadge').textContent=cart.length;}
 
+// ==================== FUNÇÃO PRINCIPAL ====================
 function renderCart(){
   const el = document.getElementById('cartContent');
   
@@ -334,7 +335,6 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <!-- Botão via JavaScript - Melhor compatibilidade com Chrome Android -->
       <button onclick="abrirWhatsFinalizar('${encodedMsg}')" 
               class="wa-btn">
         <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
@@ -342,18 +342,21 @@ function renderCart(){
       </button>
     </div>`;
 }
+
 function abrirWhatsFinalizar(encodedMsg) {
-  const url = `https://wa.me/5521994958427?text=${encodedMsg}`;
+  const numero = "5521994958427";
+  const url = `https://wa.me/${numero}?text=${encodedMsg}`;
   
-  // Estratégia mais confiável para Chrome Android
-  try {
-    window.location.href = url;
-  } catch(e) {
-    window.open(url, '_blank');
-  }
+  // Solução mais forte para Chrome Android
+  window.location.replace(url);
+  
+  // Fallback
+  setTimeout(() => {
+    window.open(url, '_self');
+  }, 300);
 }
 
-
+// ==================== OUTRAS FUNÇÕES ====================
 function removeCart(idx){cart.splice(idx,1);updateBadge();renderCart();}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
 
