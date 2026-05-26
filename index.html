@@ -345,15 +345,18 @@ function renderCart(){
 
 function abrirWhatsFinalizar(encodedMsg) {
   const numero = "5521994958427";
-  const url = `https://wa.me/${numero}?text=${encodedMsg}`;
+  const text = encodedMsg;
   
-  // Solução mais forte para Chrome Android
-  window.location.replace(url);
+  // Intent para Android (mais confiável no Chrome)
+  const intentUrl = `intent://send?phone=${numero}&text=${text}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
   
-  // Fallback
+  // Tenta várias formas
+  window.location.href = intentUrl;
+  
+  // Fallbacks
   setTimeout(() => {
-    window.open(url, '_self');
-  }, 300);
+    window.location.href = `https://wa.me/${numero}?text=${text}`;
+  }, 400);
 }
 
 // ==================== OUTRAS FUNÇÕES ====================
