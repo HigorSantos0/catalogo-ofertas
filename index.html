@@ -313,10 +313,16 @@ function renderCart(){
     el.innerHTML=`<div class="cart-empty-wrap"><div class="cart-empty-icon"><i class="ti ti-heart" aria-hidden="true"></i></div><div class="cart-etitle">Carrinho vazio</div><div class="cart-esub">Adicione presentes do catálogo para montar seu pedido especial</div><button class="btn-glow" onclick="goPage('catalog',null)">Ver Catálogo</button></div>`;
     return;
   }
-  const total=cart.reduce((s,i)=>s+i.price,0);
-  const msg=encodeURIComponent('Olá! Gostaria de finalizar meu pedido:\n'+cart.map(i=>`- ${i.name}: ${fmt(i.price)}`).join('\n')+`\n\nTotal: ${fmt(total)}`);
   
-  el.innerHTML=cart.map((item,idx)=>`
+  const total = cart.reduce((s,i)=>s+i.price,0);
+  const msg = encodeURIComponent('Olá! Gostaria de finalizar meu pedido:\n' + 
+                cart.map(i => `- ${i.name}: ${fmt(i.price)}`).join('\n') + 
+                `\n\nTotal: ${fmt(total)}`);
+
+  // Link direto do WhatsApp (mais estável no celular)
+  const whatsappUrl = `https://wa.me/5521994958427?text=${msg}`;
+
+  el.innerHTML = cart.map((item,idx)=>`
     <div class="ci">
       <img src="${item.img}" alt="${item.short}" style="width:64px; height:64px; object-fit:cover; border-radius:12px; flex-shrink:0; border:1px solid rgba(0,0,0,0.08);">
       <div class="ci-info">
@@ -325,18 +331,18 @@ function renderCart(){
       </div>
       <div class="ci-price">${fmt(item.price)}</div>
       <button class="ci-remove" onclick="removeCart(${idx})" aria-label="Remover"><i class="ti ti-x" aria-hidden="true"></i></button>
-    </div>`).join('')+`
+    </div>`).join('') + `
     <div class="cart-sum">
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <button 
-        type="button" 
-        class="wa-btn" 
-        onclick="finalizarWhatsApp('${msg}')">
+      <!-- BOTÃO ALTERADO - Agora é link direto (igual ao Fale Conosco) -->
+      <a href="${whatsappUrl}" 
+         target="_blank" 
+         class="wa-btn">
         <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:1.2rem"></i> 
         Finalizar pelo WhatsApp
-      </button>
+      </a>
     </div>`;
 }
 function abrirWhatsApp(msg) {
