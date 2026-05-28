@@ -8,7 +8,7 @@ const PRODS=[
   {id:7, img:'Fotos/mimo.jpeg', name:'Caixa Mimo Chocolates', short:'Caixa Chocolates', desc:'Caixa recheada de delícias contendo caixa de bombons Garoto, Bis, Ouro Branco e Baton.', price:85, g:'g1', badge:'Novidade'},
 ];
 
-let cart=[],favs=new Set();
+let cart=[], favs=new Set(), pendingWaMsg='';
 
 function fmt(v){return'R$ '+v.toFixed(2).replace('.',',')}
 
@@ -86,7 +86,8 @@ function renderCart(){
   let mensagem = 'Olá! Gostaria de finalizar meu pedido:\n\n';
   cart.forEach(item => { mensagem += `- ${item.name}: ${fmt(item.price)}\n`; });
   mensagem += `\nTotal: ${fmt(total)}`;
-  const waUrl = `https://wa.me/5521994958427?text=${encodeURIComponent(mensagem)}`;
+
+  pendingWaMsg = mensagem;
 
   el.innerHTML = cart.map((item,idx)=>`
     <div class="ci">
@@ -102,7 +103,7 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <button class="wa-btn" onclick="openWhatsApp('${mensagem.replace(/'/g, "\\'")}')">
+      <button class="wa-btn" onclick="openWhatsApp(pendingWaMsg)">
         <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
         Finalizar pelo WhatsApp
       </button>
