@@ -57,11 +57,19 @@ function addCart(id){
 
 function updateBadge(){document.getElementById('cartBadge').textContent=cart.length;}
 
-function openWhatsApp(numero, mensagem) {
-  let telefone = numero.replace(/\D/g, '');
-  if (!telefone.startsWith('55')) telefone = '55' + telefone;
-  const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
-  window.location.href = url;
+// Substitua a função openWhatsApp existente por esta:
+function openWhatsApp(mensagem) {
+  const telefone = '5521994958427';
+  const encoded = encodeURIComponent(mensagem);
+  const isAndroid = /android/i.test(navigator.userAgent);
+  
+  if (isAndroid) {
+    // intent:// é a forma garantida no Chrome Android
+    const intentUrl = `intent://send?phone=${telefone}&text=${encoded}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+    window.location.href = intentUrl;
+  } else {
+    window.open(`https://wa.me/${telefone}?text=${encoded}`, '_blank');
+  }
 }
 
 // ==================== FUNÇÃO PRINCIPAL ====================
@@ -94,10 +102,10 @@ function renderCart(){
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
       
-      <a href="${waUrl}" class="wa-btn">
-    <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> 
-    Finalizar pelo WhatsApp
-</a>
+      <button class="wa-btn" onclick="openWhatsApp('${mensagem.replace(/'/g, "\\'")}')">
+        <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
+        Finalizar pelo WhatsApp
+      </button>
     </div>`;
 }
 
