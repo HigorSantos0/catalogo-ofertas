@@ -106,7 +106,7 @@ function renderCart(){
       </a>
     </div>`;
 
-  document.getElementById('waLink').href = `https://wa.me/5521994958427?text=${encodeURIComponent(mensagem)}`;
+  document.getElementById('waLink').href = `https://api.whatsapp.com/send?phone=5521994958427&text=${encodeURIComponent(mensagem)}`;
 }
 
 // ==================== OUTRAS FUNÇÕES ====================
