@@ -87,8 +87,6 @@ function renderCart(){
   cart.forEach(item => { mensagem += `- ${item.name}: ${fmt(item.price)}\n`; });
   mensagem += `\nTotal: ${fmt(total)}`;
 
-  pendingWaMsg = mensagem;
-
   el.innerHTML = cart.map((item,idx)=>`
     <div class="ci">
       <img src="${item.img}" alt="${item.short}" style="width:64px; height:64px; object-fit:cover; border-radius:12px; flex-shrink:0; border:1px solid rgba(0,0,0,0.08);">
@@ -102,12 +100,13 @@ function renderCart(){
     <div class="cart-sum">
       <div class="sum-label">Total do pedido</div>
       <div class="sum-total">${fmt(total)}</div>
-      
-      <button class="wa-btn" onclick="openWhatsApp(pendingWaMsg)">
+      <a id="waLink" href="" target="_blank" rel="noopener noreferrer" class="wa-btn">
         <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
         Finalizar pelo WhatsApp
-      </button>
+      </a>
     </div>`;
+
+  document.getElementById('waLink').href = `https://wa.me/5521994958427?text=${encodeURIComponent(mensagem)}`;
 }
 
 // ==================== OUTRAS FUNÇÕES ====================
