@@ -107,6 +107,7 @@ function renderCart(){
     </div>`;
 
   document.getElementById('waLink').href = `https://api.whatsapp.com/send?phone=5521994958427&text=${encodeURIComponent(mensagem)}`;
+  document.getElementById('waLink').target = '_self';
 }
 
 // ==================== OUTRAS FUNÇÕES ====================
